@@ -1,5 +1,64 @@
 # Yanyang、
 成本函数是著名的 Rosenbrock 函数
+这段代码使用了 L-BFGS (Limited-memory Broyden–Fletcher–Goldfarb–Shanno) 算法来最小化一个成本函数。具体来说，该成本函数是著名的 Rosenbrock 函数，也被称为 Rosenbrock 谷函数。以下是代码中的数学原理及其详细解释：
+
+### Rosenbrock 函数
+Rosenbrock 函数是一个经典的测试函数，常用于优化算法的性能测试。对于二维情况，Rosenbrock 函数定义如下：
+
+\[ f(x, y) = (1 - x)^2 + 100(y - x^2)^2 \]
+
+该函数在点 \((1, 1)\) 处有一个全局最小值，其值为 0。这个函数的梯度计算如下：
+
+\[ \frac{\partial f}{\partial x} = -2(1 - x) - 400x(y - x^2) \]
+\[ \frac{\partial f}{\partial y} = 200(y - x^2) \]
+
+### L-BFGS 算法
+L-BFGS 算法是一种用于大规模优化问题的算法，它是 BFGS 算法的改进版本，适用于内存受限的情况。BFGS 算法是一种拟牛顿法，利用梯度信息逐步逼近 Hessian 矩阵（目标函数的二阶导数矩阵），从而实现快速收敛。L-BFGS 通过只存储几个最近的梯度和步长信息来节省内存。
+
+### 代码解释
+
+1. **类定义与成员函数**
+   - `MinimizationExample` 类包含一个成员函数 `run`，用于执行优化过程。
+   - 成员函数 `costFunction` 和 `monitorProgress` 分别用于计算成本函数值和梯度，以及监控优化过程的进展。
+
+2. **初始化优化参数**
+   - 变量 `x` 是优化变量的初始值。在这里，每隔一个元素设置为 -1.2 和 1.0。
+   - `params` 是 L-BFGS 算法的参数，包括梯度的收敛阈值 (`g_epsilon`)、历史步数 (`past`) 和误差阈值 (`delta`)。
+
+3. **开始优化**
+   - 调用 `lbfgs::lbfgs_optimize` 函数进行优化，该函数接受初始变量、最终成本值、成本函数、梯度监控函数和 L-BFGS 参数。
+
+4. **成本函数与梯度计算**
+   - `costFunction` 函数计算 Rosenbrock 函数的值和梯度。对于每个偶数索引 `i`：
+     - 计算 `t1 = 1.0 - x(i)` 和 `t2 = 10.0 * (x(i + 1) - x(i) * x(i))`。
+     - 计算梯度 `g(i + 1) = 20.0 * t2` 和 `g(i) = -2.0 * (x(i) * g(i + 1) + t1)`。
+     - 累加成本值 `fx += t1 * t1 + t2 * t2`。
+
+5. **进展监控**
+   - `monitorProgress` 函数在每次迭代时打印当前迭代次数、函数值、梯度的无穷范数和当前变量值。
+
+6. **主函数**
+   - 创建 `MinimizationExample` 对象并调用 `run` 函数，运行 L-BFGS 优化。
+
+### 数学细节
+
+1. **Rosenbrock 函数的梯度计算**
+   - 对于 `f(x, y) = (1 - x)^2 + 100(y - x^2)^2`：
+     - \(\frac{\partial f}{\partial x} = -2(1 - x) - 400x(y - x^2)\)
+     - \(\frac{\partial f}{\partial y} = 200(y - x^2)\)
+
+2. **梯度计算在代码中的实现**
+   - `t1 = 1.0 - x(i)` 对应 \((1 - x)\)
+   - `t2 = 10.0 * (x(i + 1) - x(i) * x(i))` 对应 \(10(y - x^2)\)
+   - `g(i + 1) = 20.0 * t2` 对应 \(\frac{\partial f}{\partial y}\)
+   - `g(i) = -2.0 * (x(i) * g(i + 1) + t1)` 对应 \(\frac{\partial f}{\partial x}\)
+
+3. **优化过程**
+   - L-BFGS 利用梯度信息更新变量 `x`，逐步逼近最优解。
+   - 在每次迭代中，通过 `monitorProgress` 打印当前状态，帮助理解收敛过程。
+
+### 结论
+这段代码展示了如何使用 L-BFGS 算法优化 Rosenbrock 函数，并通过计算梯度和跟踪进展来实现最小化过程。Rosenbrock 函数是一个具有挑战性的测试函数，常用于评估优化算法的性能。
 
 
 # LBFGS-Lite
