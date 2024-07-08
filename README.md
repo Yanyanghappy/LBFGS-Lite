@@ -1,4 +1,4 @@
-# Yanyang、
+# Yanyang
 成本函数是著名的 Rosenbrock 函数
 这段代码使用了 L-BFGS (Limited-memory Broyden–Fletcher–Goldfarb–Shanno) 算法来最小化一个成本函数。具体来说，该成本函数是著名的 Rosenbrock 函数，也被称为 Rosenbrock 谷函数。以下是代码中的数学原理及其详细解释：
 
