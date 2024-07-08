@@ -1,3 +1,7 @@
+# Yanyang、
+成本函数是著名的 Rosenbrock 函数
+
+
 # LBFGS-Lite
 A header-only L-BFGS unconstrained optimizer.
 
