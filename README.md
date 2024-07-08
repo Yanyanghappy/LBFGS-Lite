@@ -1,4 +1,5 @@
 # Yanyang
+## 关键是xi是x，xi+1是y，gi是f对x的梯度，gi+1是f对y的梯度，所以通过在optimize中不断调整x来影响g然后根据g的变化来进行优化直到达到前面定义的最小化参数比如梯度阈值才停止迭代视为达到最优
 成本函数是著名的 Rosenbrock 函数
 这段代码使用了 L-BFGS (Limited-memory Broyden–Fletcher–Goldfarb–Shanno) 算法来最小化一个成本函数。具体来说，该成本函数是著名的 Rosenbrock 函数，也被称为 Rosenbrock 谷函数。以下是代码中的数学原理及其详细解释：
 
